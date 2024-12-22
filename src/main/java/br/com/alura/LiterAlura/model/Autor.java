@@ -10,11 +10,10 @@ public class Autor {
     public Autor() {
     }
 
-    public Autor(Long id, String nome, Integer anoNascimento, Integer anoFalecimento) {
-        this.id = id;
-        this.nome = nome;
-        this.anoNascimento = anoNascimento;
-        this.anoFalecimento = anoFalecimento;
+    public Autor(DadosAutor dadosAutor) {
+        this.nome = dadosAutor.nome();
+        this.anoNascimento = dadosAutor.anoNascimento();
+        this.anoFalecimento = dadosAutor.anoFalecimento();
     }
 
     @Override

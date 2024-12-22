@@ -3,20 +3,20 @@ package br.com.alura.LiterAlura.model;
 public class Livro {
 
     private Long id;
-    private Autor autor;
     private String titulo;
+    private Autor autor;
     private String idioma;
-    private Integer num_dowload;
+    private Integer num_download;
 
     public Livro() {
+
     }
 
-    public Livro(Long id, Autor autor, String titulo, String idioma, Integer num_dowload) {
-        this.id = id;
-        this.autor = autor;
-        this.titulo = titulo;
-        this.idioma = idioma;
-        this.num_dowload = num_dowload;
+    public Livro(DadosLivro dadosLivro) {
+        this.titulo = dadosLivro.titulo();
+        this.autor = (Autor) dadosLivro.autor();
+        this.idioma = String.valueOf(dadosLivro.idioma());
+        this.num_download = dadosLivro.num_downloads();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Livro {
                 ", autor=" + autor +
                 ", titulo='" + titulo + '\'' +
                 ", idioma='" + idioma + '\'' +
-                ", num_dowload=" + num_dowload +
+                ", num_dowload=" + num_download +
                 '}';
     }
 }
