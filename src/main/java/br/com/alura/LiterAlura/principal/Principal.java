@@ -67,17 +67,13 @@ public class Principal {
 //        System.out.println(dadosLivro);
         System.out.println(dados);
 
-        List<Dados> dadosList = new ArrayList<>();
-        dadosList.add(dados);
-
         System.out.println("--------Livro--------");
-        for (Dados dados1 : dadosList) {
-            System.out.println("Título: "+dados1.results().getFirst().titulo());
-            System.out.println("Autor: "+dados1.results().getFirst().autor().getFirst().nome());
-            System.out.println("Idioma: "+dados1.results().getFirst().idioma());
-            System.out.println("Downloads: "+dados1.results().getFirst().num_downloads());
-        }
+        System.out.println("Nome do livro: "+dados.results().getFirst().titulo());
+        System.out.println("Autor: "+dados.results().getFirst().autor().getFirst().nome());
+        System.out.println("Idioma: "+dados.results().getFirst().idioma());
+        System.out.println("Número de downloads: "+dados.results().getFirst().num_downloads());
         System.out.println("----------------------");
+
 
     }
 
@@ -85,6 +81,7 @@ public class Principal {
         System.out.println("Livros registrados");
     }
 
+    
 
 
 }
