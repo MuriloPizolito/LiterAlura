@@ -1,22 +1,35 @@
 package br.com.alura.LiterAlura.principal;
 
 
+import br.com.alura.LiterAlura.model.Autor;
 import br.com.alura.LiterAlura.model.Dados;
-import br.com.alura.LiterAlura.model.DadosLivro;
+import br.com.alura.LiterAlura.model.DadosAutor;
 import br.com.alura.LiterAlura.model.Livro;
+import br.com.alura.LiterAlura.repository.LivroRepository;
 import br.com.alura.LiterAlura.service.ConsumoApi;
 import br.com.alura.LiterAlura.service.ConverteDados;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class Principal {
 
     private Scanner scanner = new Scanner(System.in);
     private ConsumoApi consumo = new ConsumoApi();
     private ConverteDados conversor = new ConverteDados();
     private final String ENDERECO = "https://gutendex.com/books/?search=";
+    private List<Dados> dadosList = new ArrayList<>();
+
+
+    private LivroRepository livroRepository;
+
+    public Principal(LivroRepository livroRepository) {
+        this.livroRepository = livroRepository;
+    }
+
 
     public void menuOperacoes() {
         var opcao = -1;
@@ -37,7 +50,7 @@ public class Principal {
 
             switch (opcao) {
                 case 1:
-                    buscarLivro();
+                    buscarLivroWeb();
                     break;
                 case 2:
                     listarLivros();
@@ -56,32 +69,41 @@ public class Principal {
 
     }
 
+    // testes
     private void buscarLivro() {
         System.out.println("Digite o nome do livro para buscar: ");
         var busca = scanner.nextLine();
         var json = consumo.obterDados(ENDERECO + busca.replace(" ", "+"));
-//        var json = consumo.obterDados("https://gutendex.com/books/?search=dom+casmurro");
-        System.out.println(json);
-//        DadosLivro dadosLivro = conversor.obterDados(json, DadosLivro.class);
         Dados dados = conversor.obterDados(json, Dados.class);
-//        System.out.println(dadosLivro);
         System.out.println(dados);
+    }
 
-        System.out.println("--------Livro--------");
-        System.out.println("Nome do livro: "+dados.results().getFirst().titulo());
-        System.out.println("Autor: "+dados.results().getFirst().autor().getFirst().nome());
-        System.out.println("Idioma: "+dados.results().getFirst().idioma());
-        System.out.println("Número de downloads: "+dados.results().getFirst().num_downloads());
-        System.out.println("----------------------");
+    //     ideia de logica
+    private void buscarLivroWeb() {
+        Dados dados = getDadosWeb();
+        Livro livro = new Livro();
+        livro.setTitulo(dados.results().getFirst().titulo());
+        livro.setIdioma(String.valueOf(dados.results().getFirst().idioma()));
+        livro.setNum_download(dados.results().getFirst().num_downloads());
+//        dadosList.add(dados);
+        livroRepository.save(livro);
+        System.out.println(dados);
+    }
 
-
+    private Dados getDadosWeb() {
+        System.out.println("Digite o nome do livro para buscar: ");
+        var busca = scanner.nextLine();
+        var json = consumo.obterDados(ENDERECO + busca.replace(" ", "+"));
+        Dados dados = conversor.obterDados(json, Dados.class);
+        return dados;
     }
 
     private void listarLivros() {
-        System.out.println("Livros registrados");
+        List<Livro> livros = livroRepository.findAll();
+        livros.forEach(System.out::println);
     }
 
-    
+
 
 
 }

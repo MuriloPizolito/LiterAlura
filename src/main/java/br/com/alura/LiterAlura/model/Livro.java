@@ -1,32 +1,82 @@
 package br.com.alura.LiterAlura.model;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "livros")
 public class Livro {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titulo;
-    private Autor autor;
     private String idioma;
     private Integer num_download;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "livros_autor",
+            joinColumns = @JoinColumn(name = "livro_id"),
+            inverseJoinColumns = @JoinColumn(name = "autor_id")
+    )
+    private List<Autor> autores;
+
     public Livro() {
 
-    }
-
-    public Livro(DadosLivro dadosLivro) {
-        this.titulo = dadosLivro.titulo();
-        this.autor = (Autor) dadosLivro.autor();
-        this.idioma = String.valueOf(dadosLivro.idioma());
-        this.num_download = dadosLivro.num_downloads();
     }
 
     @Override
     public String toString() {
         return "Livro{" +
                 "id=" + id +
-                ", autor=" + autor +
                 ", titulo='" + titulo + '\'' +
                 ", idioma='" + idioma + '\'' +
-                ", num_dowload=" + num_download +
+                ", num_download=" + num_download +
+                ", autores=" + autores +
                 '}';
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
+
+    public Integer getNum_download() {
+        return num_download;
+    }
+
+    public void setNum_download(Integer num_download) {
+        this.num_download = num_download;
+    }
+
+    public List<Autor> getAutores() {
+        return autores;
+    }
+
+    public void setAutores(List<Autor> autores) {
+        this.autores = autores;
+    }
+
 }

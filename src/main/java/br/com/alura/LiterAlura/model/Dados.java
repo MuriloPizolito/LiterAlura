@@ -8,4 +8,13 @@ import java.util.List;
 public record Dados(
         @JsonAlias ("results") List<DadosLivro> results){
 
+    @Override
+    public String toString() {
+        return "--------Livro--------" + "\n" +
+                "Título: " + results().getFirst().titulo() + "\n" +
+                "Autor: " + results().getFirst().autor().getFirst().nome() + "\n" +
+                "Idioma: " + results().getFirst().idioma() + "\n" +
+                "Número de downloads: " + results().getFirst().num_downloads() + "\n" +
+                "----------------------";
+    }
 }
