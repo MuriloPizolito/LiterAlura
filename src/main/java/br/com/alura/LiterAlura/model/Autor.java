@@ -20,7 +20,7 @@ public class Autor {
     public Autor() {
     }
 
-    @ManyToMany(mappedBy = "autores")
+    @ManyToMany(mappedBy = "autores", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Livro> livros = new ArrayList<>();
 
 
