@@ -8,7 +8,7 @@ autores, proporcionando uma experiência prática e intuitiva para o usuário vi
 
 <p align="center">Challenge Alura + Oracle - ONE</p>
 <p align="center">
-<img alt="Badge do projeto" src="./assets/" width="50%">
+<img alt="Badge do projeto" src="./assets/badgeliteralura.png" width="50%">
 </p>
 
 
